@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>旅途 - 您的智能旅行助手</title>
+    <link rel="stylesheet" href="计设.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <script src="china-cities.js"></script>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <!-- Logo -->
+            <a href="#" class="nav-logo">
+                <i class="fas fa-plane-departure"></i>
+                <span>旅途</span>
+            </a>
+            
+            <!-- 导航菜单 -->
+            <ul class="nav-menu">
+                <li class="nav-item active">
+                    <a href="#home" class="nav-link">
+                        <i class="fas fa-home"></i>
+                        <span>主页</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#plan" class="nav-link">
+                        <i class="fas fa-map-marked-alt"></i>
+                        <span>官方规划</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#ai" class="nav-link">
+                        <i class="fas fa-robot"></i>
+                        <span>AI助手</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#community" class="nav-link">
+                        <i class="fas fa-users"></i>
+                        <span>社区</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#profile" class="nav-link">
+                        <i class="fas fa-user-circle"></i>
+                        <span>个人中心</span>
+                    </a>
+                </li>
+            </ul>
+            
+            <!-- 用户操作区 -->
+            <div class="nav-actions">
+                <button class="btn-login" id="loginBtn">
+                    <i class="fas fa-user"></i>
+                    <span>登录 / 注册</span>
+                </button>
+                <div class="user-menu hidden" id="userMenu">
+                    <div class="user-menu-trigger">
+                        <div class="user-avatar-small" id="navAvatar">
+                            <img src="" alt="" id="navAvatarImg" style="display: none; width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+                            <i class="fas fa-user" id="navAvatarIcon"></i>
+                        </div>
+                        <span id="username">旅行者</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="user-dropdown">
+                        <a href="#profile" class="dropdown-item">
+                            <i class="fas fa-user-circle"></i> 个人中心
+                        </a>
+                        <a href="#profile" class="dropdown-item" data-tab="settings">
+                            <i class="fas fa-cog"></i> 账号设置
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item logout" id="logoutBtn">
+                            <i class="fas fa-sign-out-alt"></i> 退出登录
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 移动端菜单按钮 -->
+            <div class="nav-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主页内容 -->
+    <main class="main-content">
+        <!-- 主页部分 -->
+        <section id="home" class="section active">
+            <div class="hero">
+                <div class="hero-content">
+                    <h1>探索世界的美好</h1>
+                    <p>发现精彩旅程，记录美好时光</p>
+                    <div class="search-box">
+                        <input type="text" placeholder="搜索目的地...">
+                        <button class="search-btn">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+                <!-- 热门搜索词云 -->
+                <div class="word-cloud-container">
+                    <h3><i class="fas fa-fire"></i> 热门搜索</h3>
+                    <div class="word-cloud-wrapper">
+                        <div class="word-cloud" id="wordCloud">
+                            <!-- 词云由JS动态生成 -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 热门推荐 -->
+            <div class="recommendations">
+                <h2>热门目的地</h2>
+                <div class="destinations-list">
+                    <!-- 北京 -->
+                    <div class="destination-card" data-destination="北京">
+                        <div class="destination-img">
+                            <img src="https://images.unsplash.com/photo-1508804185872-d7badad00f7d?w=400&h=300&fit=crop" alt="北京故宫" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <i class="fas fa-image" style="display: none;"></i>
+                        </div>
+                        <div class="destination-content">
+                            <div class="destination-header">
+                                <h3>北京</h3>
+                                <span class="destination-tag">热门</span>
+                            </div>
+                            <div class="destination-post">
+                                <div class="post-user">
+                                    <div class="post-avatar">
+                                        <i class="fas fa-user-circle"></i>
+                                    </div>
+                                    <div class="post-user-info">
+                                        <span class="post-username">AAA魂环批发唐总</span>
+                                        <span class="post-time">2小时前</span>
+                                    </div>
+                                </div>
+                                <p class="post-text">刚从北京回来，故宫的红墙黄瓦真的太震撼了！推荐大家早上8点就去，避开人流高峰。天安门广场的升旗仪式也值得一看，记得提前查好时间～</p>
+                                <div class="post-actions">
+                                    <span><i class="fas fa-heart"></i> 328</span>
+                                    <span><i class="fas fa-comment"></i> 56</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 上海 -->
+                    <div class="destination-card" data-destination="上海">
+                        <div class="destination-img">
+                            <img src="https://images.unsplash.com/photo-1538428494232-9c0d8a3ab403?w=400&h=300&fit=crop" alt="上海外滩" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <i class="fas fa-image" style="display: none;"></i>
+                        </div>
+                        <div class="destination-content">
+                            <div class="destination-header">
+                                <h3>上海</h3>
+                                <span class="destination-tag">热门</span>
+                            </div>
+                            <div class="destination-post">
+                                <div class="post-user">
+                                    <div class="post-avatar">
+                                        <i class="fas fa-user-circle"></i>
+                                    </div>
+                                    <div class="post-user-info">
+                                        <span class="post-username">城市漫步者</span>
+                                        <span class="post-time">5小时前</span>
+                                    </div>
+                                </div>
+                                <p class="post-text">外滩的夜景真的绝美！建议傍晚去，既能看到夕阳下的陆家嘴，又能欣赏华灯初上的外滩。南京路步行街也很好逛，各种小吃美食应有尽有！</p>
+                                <div class="post-actions">
+                                    <span><i class="fas fa-heart"></i> 256</span>
+                                    <span><i class="fas fa-comment"></i> 42</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 西安 -->
+                    <div class="destination-card" data-destination="西安">
+                        <div class="destination-img">
+                            <img src="https://images.unsplash.com/photo-1599571234909-29ed5d1321d6?w=400&h=300&fit=crop" alt="西安兵马俑" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <i class="fas fa-image" style="display: none;"></i>
+                        </div>
+                        <div class="destination-content">
+                            <div class="destination-header">
+                                <h3>西安</h3>
+                                <span class="destination-tag">文化</span>
+                            </div>
+                            <div class="destination-post">
+                                <div class="post-user">
+                                    <div class="post-avatar">
+                                        <i class="fas fa-user-circle"></i>
+                                    </div>
+                                    <div class="post-user-info">
+                                        <span class="post-username">历史爱好者</span>
+                                        <span class="post-time">1天前</span>
+                                    </div>
+                                </div>
+                                <p class="post-text">兵马俑真的不愧是世界第八大奇迹！每个陶俑的表情都不一样，古人的工艺太精湛了。回民街的肉夹馍和羊肉泡馍也超级好吃，强烈推荐！</p>
+                                <div class="post-actions">
+                                    <span><i class="fas fa-heart"></i> 189</span>
+                                    <span><i class="fas fa-comment"></i> 31</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 成都 -->
+                    <div class="destination-card" data-destination="成都">
+                        <div class="destination-img">
+                            <img src="https://images.unsplash.com/photo-1584464491033-06628f3a6b7b?w=400&h=300&fit=crop" alt="成都大熊猫" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <i class="fas fa-image" style="display: none;"></i>
+                        </div>
+                        <div class="destination-content">
+                            <div class="destination-header">
+                                <h3>成都</h3>
+                                <span class="destination-tag">美食</span>
+                            </div>
+                            <div class="destination-post">
+                                <div class="post-user">
+                                    <div class="post-avatar">
+                                        <i class="fas fa-user-circle"></i>
+                                    </div>
+                                    <div class="post-user-info">
+                                        <span class="post-username">吃货小分队</span>
+                                        <span class="post-time">2天前</span>
+                                    </div>
+                                </div>
+                                <p class="post-text">成都真的是美食天堂！火锅、串串、担担面、龙抄手……吃得根本停不下来！大熊猫基地也超可爱，建议早上去，熊猫比较活跃～</p>
+                                <div class="post-actions">
+                                    <span><i class="fas fa-heart"></i> 412</span>
+                                    <span><i class="fas fa-comment"></i> 78</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 南京 -->
+                    <div class="destination-card" data-destination="南京">
+                        <div class="destination-img">
+                            <img src="https://images.unsplash.com/photo-1548919973-5cef591cdbc9?w=400&h=300&fit=crop" alt="南京中山陵" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <i class="fas fa-image" style="display: none;"></i>
+                        </div>
+                        <div class="destination-content">
+                            <div class="destination-header">
+                                <h3>南京</h3>
+                                <span class="destination-tag">历史</span>
+                            </div>
+                            <div class="destination-post">
+                                <div class="post-user">
+                                    <div class="post-avatar">
+                                        <i class="fas fa-user-circle"></i>
+                                    </div>
+                                    <div class="post-user-info">
+                                        <span class="post-username">江南游子</span>
+                                        <span class="post-time">3天前</span>
+                                    </div>
+                                </div>
+                                <p class="post-text">南京是一座有故事的城市！中山陵的台阶虽然多但风景绝美，夫子庙的夜景很有江南韵味。鸭血粉丝汤和盐水鸭一定要尝尝，正宗又便宜！</p>
+                                <div class="post-actions">
+                                    <span><i class="fas fa-heart"></i> 267</span>
+                                    <span><i class="fas fa-comment"></i> 45</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 金华 -->
+                    <div class="destination-card" data-destination="金华">
+                        <div class="destination-img">
+                            <img src="https://images.unsplash.com/photo-1547981609-4b6bfe67ca0b?w=400&h=300&fit=crop" alt="金华横店影视城" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <i class="fas fa-image" style="display: none;"></i>
+                        </div>
+                        <div class="destination-content">
+                            <div class="destination-header">
+                                <h3>金华</h3>
+                                <span class="destination-tag">影视</span>
+                            </div>
+                            <div class="destination-post">
+                                <div class="post-user">
+                                    <div class="post-avatar">
+                                        <i class="fas fa-user-circle"></i>
+                                    </div>
+                                    <div class="post-user-info">
+                                        <span class="post-username">追剧少女</span>
+                                        <span class="post-time">4天前</span>
+                                    </div>
+                                </div>
+                                <p class="post-text">横店影视城太好玩了！穿越到古装剧里的感觉，还偶遇了剧组拍戏。清明上河图景区真的美得像幅画，穿上汉服拍照超级出片！</p>
+                                <div class="post-actions">
+                                    <span><i class="fas fa-heart"></i> 356</span>
+                                    <span><i class="fas fa-comment"></i> 62</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 官方规划 -->
+        <section id="plan" class="section">
+            <div class="section-header">
+                <h1>官方旅游规划</h1>
+                <p>精选官方推荐路线，省心出行</p>
+            </div>
+            <div class="plans-filter" id="plansFilter">
+                <div class="filter-header">
+                    <h3>筛选条件</h3>
+                    <button class="filter-toggle" id="filterToggle">
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                </div>
+                <div class="filter-content">
+                    <div class="filter-section">
+                        <button class="filter-btn active" data-filter="all">全部</button>
+                        <button class="filter-btn location-btn" id="getLocationBtn">
+                            <i class="fas fa-location-dot"></i> 附近
+                        </button>
+                    </div>
+                    <div class="filter-group">
+                        <span class="filter-group-label">城市</span>
+                        <div class="filter-buttons">
+                            <button class="filter-btn" data-filter="北京">北京</button>
+                            <button class="filter-btn" data-filter="上海">上海</button>
+                            <button class="filter-btn" data-filter="西安">西安</button>
+                            <button class="filter-btn" data-filter="成都">成都</button>
+                            <button class="filter-btn" data-filter="南京">南京</button>
+                            <button class="filter-btn" data-filter="金华">金华</button>
+                        </div>
+                    </div>
+                    <div class="filter-group">
+                        <span class="filter-group-label">距离</span>
+                        <div class="filter-buttons">
+                            <button class="filter-btn" data-filter="distance-10">10km内</button>
+                            <button class="filter-btn" data-filter="distance-50">50km内</button>
+                            <button class="filter-btn" data-filter="distance-100">100km内</button>
+                            <button class="filter-btn" data-filter="distance-all">不限</button>
+                        </div>
+                    </div>
+                    <div class="filter-group">
+                        <span class="filter-group-label">热度</span>
+                        <div class="filter-buttons">
+                            <button class="filter-btn" data-filter="hot">热门</button>
+                            <button class="filter-btn" data-filter="new">新品</button>
+                            <button class="filter-btn" data-filter="recommend">推荐</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="plans-container" id="plansContainer">
+                <div class="plan-card" data-destination="北京">
+                    <div class="plan-badge">热门</div>
+                    <h3>北京三日精华游</h3>
+                    <div class="plan-details">
+                        <span><i class="fas fa-clock"></i> 3天2晚</span>
+                        <span><i class="fas fa-yen-sign"></i> 2000起</span>
+                    </div>
+                    <p>天安门、故宫、长城、颐和园经典路线</p>
+                    <button class="btn-primary">查看详情</button>
+                </div>
+                <div class="plan-card" data-destination="上海">
+                    <div class="plan-badge">热门</div>
+                    <h3>上海都市三日游</h3>
+                    <div class="plan-details">
+                        <span><i class="fas fa-clock"></i> 3天2晚</span>
+                        <span><i class="fas fa-yen-sign"></i> 2500起</span>
+                    </div>
+                    <p>外滩、东方明珠、迪士尼、南京路经典路线</p>
+                    <button class="btn-primary">查看详情</button>
+                </div>
+                <div class="plan-card" data-destination="西安">
+                    <div class="plan-badge">热门</div>
+                    <h3>西安古都四日游</h3>
+                    <div class="plan-details">
+                        <span><i class="fas fa-clock"></i> 4天3晚</span>
+                        <span><i class="fas fa-yen-sign"></i> 1800起</span>
+                    </div>
+                    <p>兵马俑、大雁塔、古城墙、回民街美食之旅</p>
+                    <button class="btn-primary">查看详情</button>
+                </div>
+                <div class="plan-card" data-destination="成都">
+                    <div class="plan-badge">新品</div>
+                    <h3>成都美食五日游</h3>
+                    <div class="plan-details">
+                        <span><i class="fas fa-clock"></i> 5天4晚</span>
+                        <span><i class="fas fa-yen-sign"></i> 2200起</span>
+                    </div>
+                    <p>熊猫基地、宽窄巷子、锦里、火锅美食之旅</p>
+                    <button class="btn-primary">查看详情</button>
+                </div>
+                <div class="plan-card" data-destination="上海">
+                    <h3>江南水乡五日游</h3>
+                    <div class="plan-details">
+                        <span><i class="fas fa-clock"></i> 5天4晚</span>
+                        <span><i class="fas fa-yen-sign"></i> 3500起</span>
+                    </div>
+                    <p>苏州、杭州、乌镇深度体验</p>
+                    <button class="btn-primary">查看详情</button>
+                </div>
+                <div class="plan-card" data-destination="成都">
+                    <div class="plan-badge">新品</div>
+                    <h3>川西环线七日游</h3>
+                    <div class="plan-details">
+                        <span><i class="fas fa-clock"></i> 7天6晚</span>
+                        <span><i class="fas fa-yen-sign"></i> 4500起</span>
+                    </div>
+                    <p>稻城亚丁、色达、四姑娘山</p>
+                    <button class="btn-primary">查看详情</button>
+                </div>
+                <div class="plan-card" data-destination="南京">
+                    <div class="plan-badge">热门</div>
+                    <h3>南京古都三日游</h3>
+                    <div class="plan-details">
+                        <span><i class="fas fa-clock"></i> 3天2晚</span>
+                        <span><i class="fas fa-yen-sign"></i> 1600起</span>
+                    </div>
+                    <p>中山陵、夫子庙、秦淮河、总统府历史之旅</p>
+                    <button class="btn-primary">查看详情</button>
+                </div>
+                <div class="plan-card" data-destination="南京">
+                    <div class="plan-badge">新品</div>
+                    <h3>南京深度文化四日游</h3>
+                    <div class="plan-details">
+                        <span><i class="fas fa-clock"></i> 4天3晚</span>
+                        <span><i class="fas fa-yen-sign"></i> 2100起</span>
+                    </div>
+                    <p>博物院、美龄宫、明孝陵、老门东深度体验</p>
+                    <button class="btn-primary">查看详情</button>
+                </div>
+                <div class="plan-card" data-destination="金华">
+                    <div class="plan-badge">热门</div>
+                    <h3>横店影视城两日游</h3>
+                    <div class="plan-details">
+                        <span><i class="fas fa-clock"></i> 2天1晚</span>
+                        <span><i class="fas fa-yen-sign"></i> 800起</span>
+                    </div>
+                    <p>秦王宫、明清宫苑、广州街香港街影视体验</p>
+                    <button class="btn-primary">查看详情</button>
+                </div>
+                <div class="plan-card" data-destination="金华">
+                    <div class="plan-badge">新品</div>
+                    <h3>金华山水三日游</h3>
+                    <div class="plan-details">
+                        <span><i class="fas fa-clock"></i> 3天2晚</span>
+                        <span><i class="fas fa-yen-sign"></i> 1200起</span>
+                    </div>
+                    <p>双龙洞、诸葛八卦村、东阳木雕城探秘之旅</p>
+                    <button class="btn-primary">查看详情</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- AI助手 -->
+        <section id="ai" class="section">
+            <div class="section-header">
+                <h1>AI 智能助手</h1>
+                <p>让AI为您定制专属旅行方案</p>
+            </div>
+            <div class="ai-container">
+                <div class="ai-chat">
+                    <div class="chat-messages">
+                        <div class="message ai-message">
+                            <div class="message-avatar">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <div class="message-content">
+                                <p>您好！我是您的AI旅行助手。请告诉我您的目的地、出行时间和预算，我来为您规划完美旅程！</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chat-input-area">
+                        <input type="text" class="chat-input" placeholder="输入您的旅行需求...">
+                        <button class="send-btn">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="ai-features">
+                    <div class="feature-item">
+                        <i class="fas fa-route"></i>
+                        <h4>智能路线规划</h4>
+                        <p>根据您的时间和兴趣定制最优路线</p>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-utensils"></i>
+                        <h4>美食推荐</h4>
+                        <p>发现当地特色美食和餐厅</p>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-bed"></i>
+                        <h4>住宿建议</h4>
+                        <p>推荐性价比最高的住宿选择</p>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-calculator"></i>
+                        <h4>预算估算</h4>
+                        <p>精准计算旅行各项开支</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 社区 -->
+        <section id="community" class="section">
+            <div class="section-header">
+                <h1>旅行社区</h1>
+                <p>分享旅程，发现精彩</p>
+            </div>
+
+            <!-- 社区特色板块 -->
+            <div class="community-features">
+                <div class="feature-card soulmate">
+                    <div class="feature-icon"><i class="fas fa-heart"></i></div>
+                    <h3>灵魂配对</h3>
+                    <p>找到与你兴趣相投的旅行伙伴，一起探索世界</p>
+                    <button class="feature-btn">立即匹配</button>
+                </div>
+                <div class="feature-card gathering">
+                    <div class="feature-icon"><i class="fas fa-users"></i></div>
+                    <h3>围炉交游</h3>
+                    <p>参与线下聚会，分享旅行故事，结识新朋友</p>
+                    <button class="feature-btn">查看活动</button>
+                </div>
+                <div class="feature-card photo">
+                    <div class="feature-icon"><i class="fas fa-camera"></i></div>
+                    <h3>光影留宿</h3>
+                    <p>分享旅行摄影作品，记录美好瞬间</p>
+                    <button class="feature-btn">上传作品</button>
+                </div>
+            </div>
+            <div class="community-container">
+                <div class="post-creator">
+                    <div class="creator-avatar" id="creatorAvatar">
+                        <img src="" alt="" id="creatorAvatarImg" style="display: none; width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+                        <i class="fas fa-user" id="creatorAvatarIcon"></i>
+                    </div>
+                    <input type="text" class="post-input" placeholder="分享您的旅行故事...">
+                    <button class="post-btn">
+                        <i class="fas fa-pen"></i> 发布
+                    </button>
+                </div>
+                <div class="posts-list">
+                    <div class="post-card">
+                        <div class="post-header">
+                            <div class="user-avatar">
+                                <i class="fas fa-user-circle"></i>
+                            </div>
+                            <div class="user-info">
+                                <h4>旅行达人小王</h4>
+                                <span>2小时前 · 云南</span>
+                            </div>
+                        </div>
+                        <div class="post-content">
+                            <p>云南之旅太美了！洱海的风，大理的古城，每一处都是风景...</p>
+                            <div class="post-images">
+                                <div class="img-placeholder"><i class="fas fa-image"></i></div>
+                                <div class="img-placeholder"><i class="fas fa-image"></i></div>
+                                <div class="img-placeholder"><i class="fas fa-image"></i></div>
+                            </div>
+                        </div>
+                        <div class="post-actions">
+                            <button class="action-btn"><i class="far fa-heart"></i> 128</button>
+                            <button class="action-btn"><i class="far fa-comment"></i> 32</button>
+                            <button class="action-btn"><i class="far fa-share-square"></i> 分享</button>
+                        </div>
+                    </div>
+                    <div class="post-card">
+                        <div class="post-header">
+                            <div class="user-avatar">
+                                <i class="fas fa-user-circle"></i>
+                            </div>
+                            <div class="user-info">
+                                <h4>背包客阿明</h4>
+                                <span>5小时前 · 西藏</span>
+                            </div>
+                        </div>
+                        <div class="post-content">
+                            <p>终于完成西藏之旅！布达拉宫的震撼无法用言语形容，强烈推荐给大家！</p>
+                        </div>
+                        <div class="post-actions">
+                            <button class="action-btn"><i class="far fa-heart"></i> 256</button>
+                            <button class="action-btn"><i class="far fa-comment"></i> 45</button>
+                            <button class="action-btn"><i class="far fa-share-square"></i> 分享</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 个人中心 -->
+        <section id="profile" class="section">
+            <div class="profile-header">
+                <div class="profile-cover"></div>
+                <div class="profile-info">
+                    <div class="profile-avatar" id="profileAvatar">
+                        <img src="" alt="头像" id="avatarImg" style="display: none; width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+                        <i class="fas fa-user" id="avatarIcon"></i>
+                        <div class="avatar-upload-overlay">
+                            <i class="fas fa-camera"></i>
+                            <span>更换头像</span>
+                        </div>
+                        <input type="file" id="avatarInput" accept="image/*" style="display: none;">
+                    </div>
+                    <div class="profile-details">
+                        <h2>旅行者</h2>
+                        <p>探索世界，发现美好</p>
+                        <div class="profile-stats">
+                            <div class="stat">
+                                <span class="stat-num">12</span>
+                                <span class="stat-label">足迹</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-num">5</span>
+                                <span class="stat-label">计划</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-num">38</span>
+                                <span class="stat-label">动态</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-num">156</span>
+                                <span class="stat-label">关注</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="profile-content">
+                <div class="profile-menu">
+                    <a href="#" class="menu-item active" data-tab="footprints">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>我的足迹</span>
+                    </a>
+                    <a href="#" class="menu-item" data-tab="plans">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>我的计划</span>
+                    </a>
+                    <a href="#" class="menu-item" data-tab="favorites">
+                        <i class="fas fa-heart"></i>
+                        <span>我的收藏</span>
+                    </a>
+                    <a href="#" class="menu-item" data-tab="travelog">
+                        <i class="fas fa-book"></i>
+                        <span>旅行日志</span>
+                    </a>
+                    <a href="#" class="menu-item" data-tab="messages">
+                        <i class="fas fa-envelope"></i>
+                        <span>个人私信</span>
+                    </a>
+                    <a href="#" class="menu-item" data-tab="settings">
+                        <i class="fas fa-cog"></i>
+                        <span>账号设置</span>
+                    </a>
+                </div>
+                <div class="profile-sections">
+                    <!-- 我的足迹 -->
+                    <div class="profile-section active" data-section="footprints">
+                        <h3>最近足迹</h3>
+                        <div class="footprint-list">
+                            <div class="footprint-item">
+                                <div class="footprint-date">2024-03</div>
+                                <div class="footprint-location">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span>杭州 · 西湖</span>
+                                </div>
+                            </div>
+                            <div class="footprint-item">
+                                <div class="footprint-date">2024-01</div>
+                                <div class="footprint-location">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span>哈尔滨 · 冰雪大世界</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 我的计划 -->
+                    <div class="profile-section" data-section="plans">
+                        <h3>我的旅行计划</h3>
+                        <div class="plans-list">
+                            <div class="plan-item">
+                                <div class="plan-icon"><i class="fas fa-plane"></i></div>
+                                <div class="plan-info">
+                                    <h4>云南深度游</h4>
+                                    <p>预计出发：2024-05-01 | 行程：7天</p>
+                                </div>
+                                <span class="plan-status planning">规划中</span>
+                            </div>
+                            <div class="plan-item">
+                                <div class="plan-icon"><i class="fas fa-mountain"></i></div>
+                                <div class="plan-info">
+                                    <h4>川西环线自驾游</h4>
+                                    <p>预计出发：2024-07-15 | 行程：10天</p>
+                                </div>
+                                <span class="plan-status saved">已保存</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 我的收藏 -->
+                    <div class="profile-section" data-section="favorites">
+                        <h3>我的收藏</h3>
+                        <div class="favorites-grid">
+                            <div class="favorite-card">
+                                <div class="favorite-img"><i class="fas fa-image"></i></div>
+                                <div class="favorite-info">
+                                    <h4>北京三日精华游</h4>
+                                    <p>官方推荐路线</p>
+                                </div>
+                            </div>
+                            <div class="favorite-card">
+                                <div class="favorite-img"><i class="fas fa-image"></i></div>
+                                <div class="favorite-info">
+                                    <h4>成都美食地图</h4>
+                                    <p>用户分享攻略</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 旅行日志 -->
+                    <div class="profile-section" data-section="travelog">
+                        <h3>我的旅行日志</h3>
+
+                        <div class="travelog-list">
+                            <div class="travelog-item">
+                                <div class="travelog-date">2024-03-15</div>
+                                <div class="travelog-content">
+                                    <h4>西湖之旅</h4>
+                                    <p>今天游览了西湖，景色美不胜收，特别是断桥残雪的景点，让人流连忘返。</p>
+                                </div>
+                            </div>
+                            <div class="travelog-item">
+                                <div class="travelog-date">2024-01-20</div>
+                                <div class="travelog-content">
+                                    <h4>哈尔滨冰雪大世界</h4>
+                                    <p>冰雪大世界真的太壮观了，各种冰雕栩栩如生，夜晚的灯光秀更是精彩。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 个人私信 -->
+                    <div class="profile-section" data-section="messages">
+                        <h3>个人私信</h3>
+                        <div class="messages-list">
+                            <div class="message-item unread">
+                                <div class="message-avatar"><i class="fas fa-user"></i></div>
+                                <div class="message-content">
+                                    <div class="message-header">
+                                        <h4>系统通知</h4>
+                                        <span class="message-time">2024-03-16 10:30</span>
+                                    </div>
+                                    <p>您的旅行计划已更新，请注意查看详情。</p>
+                                </div>
+                            </div>
+                            <div class="message-item">
+                                <div class="message-avatar"><i class="fas fa-user"></i></div>
+                                <div class="message-content">
+                                    <div class="message-header">
+                                        <h4>旅行助手</h4>
+                                        <span class="message-time">2024-03-15 14:20</span>
+                                    </div>
+                                    <p>您预订的酒店已确认，入住时间为2024-04-01。</p>
+                                </div>
+                            </div>
+                            <div class="message-item">
+                                <div class="message-avatar"><i class="fas fa-user"></i></div>
+                                <div class="message-content">
+                                    <div class="message-header">
+                                        <h4>好友小明</h4>
+                                        <span class="message-time">2024-03-14 09:15</span>
+                                    </div>
+                                    <p>你好，周末一起去杭州玩吗？我有个不错的行程推荐。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 账号设置 -->
+                    <div class="profile-section" data-section="settings">
+                        <h3>账号设置</h3>
+                        <div class="settings-list">
+                            <div class="settings-group">
+                                <h4>个人信息</h4>
+                                <div class="settings-item">
+                                    <span class="settings-label">用户名</span>
+                                    <span class="settings-value" id="settingUsername">旅行者</span>
+                                    <button class="btn-edit"><i class="fas fa-edit"></i> 修改</button>
+                                </div>
+                                <div class="settings-item">
+                                    <span class="settings-label">邮箱</span>
+                                    <span class="settings-value" id="settingEmail">user@example.com</span>
+                                    <button class="btn-edit"><i class="fas fa-edit"></i> 修改</button>
+                                </div>
+                                <div class="settings-item">
+                                    <span class="settings-label">手机号</span>
+                                    <span class="settings-value">未绑定</span>
+                                    <button class="btn-edit"><i class="fas fa-link"></i> 绑定</button>
+                                </div>
+                            </div>
+                            <div class="settings-group">
+                                <h4>安全设置</h4>
+                                <div class="settings-item">
+                                    <span class="settings-label">登录密码</span>
+                                    <span class="settings-value">********</span>
+                                    <button class="btn-edit"><i class="fas fa-edit"></i> 修改</button>
+                                </div>
+                                <div class="settings-item">
+                                    <span class="settings-label">两步验证</span>
+                                    <span class="settings-value">未开启</span>
+                                    <button class="btn-edit"><i class="fas fa-toggle-off"></i> 开启</button>
+                                </div>
+                            </div>
+                            <div class="settings-group">
+                                <h4>隐私设置</h4>
+                                <div class="settings-item">
+                                    <span class="settings-label">个人资料可见性</span>
+                                    <span class="settings-value">公开</span>
+                                    <button class="btn-edit"><i class="fas fa-edit"></i> 修改</button>
+                                </div>
+                                <div class="settings-item">
+                                    <span class="settings-label">接收邮件通知</span>
+                                    <span class="settings-value">已开启</span>
+                                    <button class="btn-edit"><i class="fas fa-toggle-on"></i> 关闭</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 规划详情页模态框 -->
+    <div class="modal-overlay" id="planDetailModal">
+        <div class="modal-container plan-detail-container">
+            <button class="modal-close" id="closePlanModal">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <div class="plan-detail-content">
+                <!-- 头部信息 -->
+                <div class="plan-detail-header">
+                    <div class="plan-detail-basic">
+                        <span class="plan-detail-badge" id="planDetailBadge">热门</span>
+                        <h2 id="planDetailName">北京三日精华游</h2>
+                        <p class="plan-detail-desc" id="planDetailDesc">天安门、故宫、长城、颐和园经典路线</p>
+                    </div>
+                    <div class="plan-detail-meta">
+                        <div class="meta-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span id="planDetailDest">北京</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-clock"></i>
+                            <span id="planDetailDays">3天2晚</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-yen-sign"></i>
+                            <span id="planDetailPrice">2000起</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 内容区域 -->
+                <div class="plan-detail-body">
+                    <!-- 行程概览 -->
+                    <div class="plan-overview">
+                        <h3><i class="fas fa-info-circle"></i> 行程概览</h3>
+                        <div class="overview-content">
+                            <div class="overview-item">
+                                <span class="overview-label">行程天数</span>
+                                <span class="overview-value" id="overviewDays">3天</span>
+                            </div>
+                            <div class="overview-item">
+                                <span class="overview-label">最佳季节</span>
+                                <span class="overview-value" id="overviewSeason">春秋季</span>
+                            </div>
+                            <div class="overview-item">
+                                <span class="overview-label">适合人群</span>
+                                <span class="overview-value" id="overviewPeople">家庭、情侣、朋友</span>
+                            </div>
+                            <div class="overview-item">
+                                <span class="overview-label">交通方式</span>
+                                <span class="overview-value" id="overviewTransport">地铁+公交</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 每日行程 -->
+                    <div class="plan-daily">
+                        <h3><i class="fas fa-calendar-alt"></i> 每日行程</h3>
+                        <div class="daily-timeline" id="planRouteTimeline">
+                            <!-- 动态生成路线内容 -->
+                        </div>
+                    </div>
+                    
+                    <!-- 酒店推荐 -->
+                    <div class="plan-hotels">
+                        <h3><i class="fas fa-hotel"></i> 酒店推荐</h3>
+                        <div class="hotels-grid" id="hotelList">
+                            <!-- 动态生成酒店内容 -->
+                        </div>
+                    </div>
+                    
+                    <!-- 费用说明 -->
+                    <div class="plan-cost">
+                        <h3><i class="fas fa-calculator"></i> 费用说明</h3>
+                        <div class="cost-details">
+                            <div class="cost-item">
+                                <span class="cost-label">费用包含</span>
+                                <span class="cost-value">住宿、门票、导游服务</span>
+                            </div>
+                            <div class="cost-item">
+                                <span class="cost-label">费用不含</span>
+                                <span class="cost-value">往返交通、个人消费</span>
+                            </div>
+                            <div class="cost-item">
+                                <span class="cost-label">退改政策</span>
+                                <span class="cost-value">提前7天可全额退款</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 底部操作 -->
+                <div class="plan-detail-footer">
+                    <div class="footer-left">
+                        <div class="price-info">
+                            <span class="price-label">参考价格</span>
+                            <span class="price-value" id="footerPrice">¥2000</span>
+                            <span class="price-unit">起/人</span>
+                        </div>
+                    </div>
+                    <div class="footer-right">
+                        <button class="btn-secondary" id="btnBackToPlans">
+                            <i class="fas fa-arrow-left"></i> 返回
+                        </button>
+                        <button class="btn-primary" id="btnBookPlan">
+                            <i class="fas fa-calendar-check"></i> 立即预订
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <i class="fas fa-plane-departure"></i>
+                <span>旅途</span>
+            </div>
+            <p>&copy; 2024 旅途旅游网. 保留所有权利.</p>
+        </div>
+    </footer>
+
+    <!-- 登录/注册模态框 -->
+    <div class="modal-overlay" id="authModal">
+        <div class="modal-container">
+            <button class="modal-close" id="closeModal">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <div class="modal-content">
+                <!-- 左侧装饰 -->
+                <div class="modal-banner">
+                    <div class="banner-content">
+                        <i class="fas fa-plane-departure"></i>
+                        <h2>旅途</h2>
+                        <p>开启您的精彩旅程</p>
+                        <div class="banner-features">
+                            <div class="feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>AI智能规划</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>官方精选路线</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>社区分享互动</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 右侧表单 -->
+                <div class="modal-forms">
+                    <!-- 登录表单 -->
+                    <div class="form-container active" id="loginForm">
+                        <h3>欢迎回来</h3>
+                        <p class="form-subtitle">登录您的账号继续探索</p>
+                        
+                        <form>
+                            <div class="form-group">
+                                <label><i class="fas fa-envelope"></i> 邮箱</label>
+                                <input type="email" placeholder="请输入邮箱" id="loginEmail" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label><i class="fas fa-lock"></i> 密码</label>
+                                <div class="password-input">
+                                    <input type="password" placeholder="请输入密码" id="loginPassword" required>
+                                    <button type="button" class="toggle-password">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="form-options">
+                                <label class="remember-me">
+                                    <input type="checkbox" id="rememberMe">
+                                    <span>记住我</span>
+                                </label>
+                                <a href="#" class="forgot-password">忘记密码?</a>
+                            </div>
+                            
+                            <button type="submit" class="btn-submit">
+                                <i class="fas fa-sign-in-alt"></i> 登录
+                            </button>
+                        </form>
+                        
+                        <div class="form-footer">
+                            <p>还没有账号? <a href="#" class="switch-form" data-target="register">立即注册</a></p>
+                        </div>
+                        
+                        <div class="social-login">
+                            <div class="divider">
+                                <span>或使用以下方式登录</span>
+                            </div>
+                            <div class="social-buttons">
+                                <button class="btn-social wechat">
+                                    <i class="fab fa-weixin"></i>
+                                </button>
+                                <button class="btn-social qq">
+                                    <i class="fab fa-qq"></i>
+                                </button>
+                                <button class="btn-social weibo">
+                                    <i class="fab fa-weibo"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 注册表单 -->
+                    <div class="form-container" id="registerForm">
+                        <h3>创建账号</h3>
+                        <p class="form-subtitle">加入旅途，开启精彩旅程</p>
+                        
+                        <form>
+                            <div class="form-group">
+                                <label><i class="fas fa-user"></i> 用户名</label>
+                                <input type="text" placeholder="请输入用户名" id="regUsername" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label><i class="fas fa-envelope"></i> 邮箱</label>
+                                <input type="email" placeholder="请输入邮箱" id="regEmail" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label><i class="fas fa-lock"></i> 密码</label>
+                                <div class="password-input">
+                                    <input type="password" placeholder="请设置密码(6-20位)" id="regPassword" required>
+                                    <button type="button" class="toggle-password">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                                <div class="password-strength" id="passwordStrength"></div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label><i class="fas fa-lock"></i> 确认密码</label>
+                                <div class="password-input">
+                                    <input type="password" placeholder="请再次输入密码" id="regConfirmPassword" required>
+                                    <button type="button" class="toggle-password">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="form-options">
+                                <label class="agreement">
+                                    <input type="checkbox" id="agreeTerms" required>
+                                    <span>我已阅读并同意 <a href="#">服务条款</a> 和 <a href="#">隐私政策</a></span>
+                                </label>
+                            </div>
+                            
+                            <button type="submit" class="btn-submit">
+                                <i class="fas fa-user-plus"></i> 注册
+                            </button>
+                        </form>
+                        
+                        <div class="form-footer">
+                            <p>已有账号? <a href="#" class="switch-form" data-target="login">立即登录</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast 提示 -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="计设.js"></script>
+</body>
+</html>
